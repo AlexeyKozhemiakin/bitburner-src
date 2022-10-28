@@ -12,6 +12,9 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reputation } from "../ui/React/Reputation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../Constants";
+import { CompanyPosition } from "../Company/CompanyPosition";
+import { CompanyPositions } from "../Company/CompanyPositions";
+
 
 interface CompanyWorkParams {
   companyName: string;
@@ -33,12 +36,20 @@ export class CompanyWork extends Work {
     return c;
   }
 
+  getPosition(): CompanyPosition {
+    const companyPositionName = Player.jobs[this.getCompany().name];
+    const companyPosition = CompanyPositions[companyPositionName];
+
+    if (!companyPosition) throw new Error(`CompanyPosition not found: '${this.companyName}'`);
+    return companyPosition;
+  }
+
   getGainRates(): WorkStats {
     let focusBonus = 1;
     if (!Player.hasAugmentation(AugmentationNames.NeuroreceptorManager, true)) {
       focusBonus = Player.focus ? 1 : CONSTANTS.BaseFocusBonus;
     }
-    return scaleWorkStats(calculateCompanyWorkStats(Player, this.getCompany()), focusBonus);
+    return scaleWorkStats(calculateCompanyWorkStats(Player, this.getCompany(), this.getPosition(), this.getCompany().favor), focusBonus);
   }
 
   process(cycles: number): boolean {

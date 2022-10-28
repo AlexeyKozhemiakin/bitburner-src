@@ -1,9 +1,14 @@
 import { Generic_fromJSON, Generic_toJSON, IReviverValue, Reviver } from "../../../utils/JSONReviver";
 import { Sleeve } from "../Sleeve";
+import { Player} from "@player";
+
 import { applySleeveGains, Work, WorkType } from "./Work";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Companies } from "../../../Company/Companies";
 import { Company } from "../../../Company/Company";
+import { CompanyPosition } from "../../../Company/CompanyPosition";
+import { CompanyPositions } from "../../../Company/CompanyPositions";
+
 import { calculateCompanyWorkStats } from "../../../Work/formulas/Company";
 import { WorkStats } from "../../../Work/WorkStats";
 import { influenceStockThroughCompanyWork } from "../../../StockMarket/PlayerInfluencing";
@@ -29,8 +34,16 @@ export class SleeveCompanyWork extends Work {
     return c;
   }
 
+  getPosition(): CompanyPosition {
+    const companyPositionName = Player.jobs[this.getCompany().name];
+    const companyPosition = CompanyPositions[companyPositionName];
+
+    if (!companyPosition) throw new Error(`Company Position not found: '${companyPositionName}'`);
+    return companyPosition;
+  }
+
   getGainRates(sleeve: Sleeve): WorkStats {
-    return calculateCompanyWorkStats(sleeve, this.getCompany());
+    return calculateCompanyWorkStats(sleeve, this.getCompany(), this.getPosition(), this.getCompany().favor);
   }
 
   process(sleeve: Sleeve, cycles: number): number {
