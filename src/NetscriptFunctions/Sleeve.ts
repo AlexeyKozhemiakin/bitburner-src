@@ -180,26 +180,9 @@ export function NetscriptSleeve(): InternalAPI<ISleeve> {
         hp: sl.hp,
         jobs: Object.keys(Player.jobs), // technically sleeves have the same jobs as the player.
         jobTitle: Object.values(Player.jobs),
-
-        mult: {
-          agility: sl.mults.agility,
-          agilityExp: sl.mults.agility_exp,
-          charisma: sl.mults.charisma,
-          charismaExp: sl.mults.charisma_exp,
-          companyRep: sl.mults.company_rep,
-          crimeMoney: sl.mults.crime_money,
-          crimeSuccess: sl.mults.crime_success,
-          defense: sl.mults.defense,
-          defenseExp: sl.mults.defense_exp,
-          dexterity: sl.mults.dexterity,
-          dexterityExp: sl.mults.dexterity_exp,
-          factionRep: sl.mults.faction_rep,
-          hacking: sl.mults.hacking,
-          hackingExp: sl.mults.hacking_exp,
-          strength: sl.mults.strength,
-          strengthExp: sl.mults.strength_exp,
-          workMoney: sl.mults.work_money,
-        },
+        skills : sl.skills,
+        mults: sl.mults
+        
       };
     },
     getSleeveAugmentations: (ctx) => (_sleeveNumber) => {

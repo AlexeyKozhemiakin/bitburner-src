@@ -1160,7 +1160,7 @@ export function NetscriptSingularity(): InternalAPI<ISingularity> {
       const crime = checkEnum(CrimeType, crimeType) ? Crimes[crimeType] : findCrime(crimeType);
       if (crime == null) throw helpers.makeRuntimeErrorMsg(ctx, `Invalid crime: '${crimeType}'`);
 
-      const crimeStatsWithMultipliers = calculateCrimeWorkStats(crime);
+      const crimeStatsWithMultipliers = calculateCrimeWorkStats(Player, crime);
 
       return Object.assign({}, crime, {
         money: crimeStatsWithMultipliers.money,

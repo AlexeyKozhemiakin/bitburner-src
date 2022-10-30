@@ -47,7 +47,7 @@ export class CrimeWork extends Work {
   }
 
   earnings(): WorkStats {
-    return calculateCrimeWorkStats(this.getCrime());
+    return calculateCrimeWorkStats(Player, this.getCrime());
   }
 
   commit(): void {

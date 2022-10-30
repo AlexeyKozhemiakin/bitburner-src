@@ -54,6 +54,7 @@ export const helpers = {
   hack,
   getValidPort,
   player,
+  person,
   server,
   gang,
   gangMember,
@@ -566,6 +567,15 @@ function player(ctx: NetscriptContext, p: unknown): Person {
     entropy: undefined,
   };
   if (!roughlyIs(fakePlayer, p)) throw makeRuntimeErrorMsg(ctx, `player should be a Player.`, "TYPE");
+  return p as Person;
+}
+
+function person(ctx: NetscriptContext, p: unknown): Person {
+  const fakePerson = {
+    hp: undefined,
+    mults: undefined,
+  };
+  if (!roughlyIs(fakePerson, p)) throw makeRuntimeErrorMsg(ctx, `person should be a Person.`, "TYPE");
   return p as Person;
 }
 

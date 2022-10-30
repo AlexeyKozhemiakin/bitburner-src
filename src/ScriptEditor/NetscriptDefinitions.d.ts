@@ -642,62 +642,6 @@ export interface NodeStats {
 }
 
 /** @public */
-export interface CharacterMult {
-  /** Agility stat */
-  agility: number;
-  /** Agility exp */
-  agilityExp: number;
-  /** Charisma stat */
-  charisma: number;
-  /** Charisma exp */
-  charismaExp: number;
-  /** Company reputation */
-  companyRep: number;
-  /** Money earned from crimes */
-  crimeMoney: number;
-  /** Crime success chance */
-  crimeSuccess: number;
-  /** Defense stat */
-  defense: number;
-  /** Defense exp */
-  defenseExp: number;
-  /** Dexterity stat */
-  dexterity: number;
-  /** Dexterity exp */
-  dexterityExp: number;
-  /** Faction reputation */
-  factionRep: number;
-  /** Hacking stat */
-  hacking: number;
-  /** Hacking exp */
-  hackingExp: number;
-  /** Strength stat */
-  strength: number;
-  /** Strength exp */
-  strengthExp: number;
-  /** Money earned from jobs */
-  workMoney: number;
-}
-
-/** @public */
-export interface SleeveWorkGains {
-  /** Hacking exp gained from work */
-  workHackExpGain: number;
-  /** Strength exp gained from work */
-  workStrExpGain: number;
-  /** Defense exp gained from work, */
-  workDefExpGain: number;
-  /** Dexterity exp gained from work */
-  workDexExpGain: number;
-  /** Agility exp gained from work */
-  workAgiExpGain: number;
-  /** Charisma exp gained from work */
-  workChaExpGain: number;
-  /** Money gained from work */
-  workMoneyGain: number;
-}
-
-/** @public */
 export interface SourceFileLvl {
   /** The number of the source file */
   n: number;
@@ -966,7 +910,9 @@ export interface SleeveInformation {
   /** Does this sleeve have access to the tor router */
   tor: boolean;
   /** Sleeve multipliers */
-  mult: CharacterMult;
+  mults: Multipliers;
+  /** Sleeve skills */
+  skills : Skills;
 }
 
 /**
@@ -3908,9 +3854,9 @@ export interface WorkStats {
  * @public
  */
 interface WorkFormulas {
-  crimeGains(crimeType: CrimeType | CrimeNames): WorkStats;
-  classGains(player: Player, classType: string, locationName: string): WorkStats;
-  factionGains(player: Player, workType: string, favor: number): WorkStats;
+  crimeGains(person: Person, crimeType: CrimeType | CrimeNames): WorkStats;
+  classGains(person: Person, classType: string, locationName: string): WorkStats;
+  factionGains(person: Person, workType: string, favor: number): WorkStats;
 }
 
 /**

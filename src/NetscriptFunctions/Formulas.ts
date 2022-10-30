@@ -362,23 +362,24 @@ export function NetscriptFormulas(): InternalAPI<IFormulas> {
       },
     },
     work: {
-      crimeGains: (ctx) => (_crimeType) => {
+      crimeGains: (ctx) => (__person, _crimeType) => {
+        const person = helpers.person(ctx, __person);
         const crimeType = helpers.string(ctx, "crimeType", _crimeType);
         if (!checkEnum(CrimeType, crimeType)) throw new Error(`Invalid crime type: ${crimeType}`);
-        return calculateCrimeWorkStats(Crimes[crimeType]);
+        return calculateCrimeWorkStats(person, Crimes[crimeType]);
       },
       classGains: (ctx) => (_person, _classType, _locationName) => {
-        const person = helpers.player(ctx, _person);
+        const person = helpers.person(ctx, _person);
         const classType = helpers.string(ctx, "classType", _classType);
         const locationName = helpers.string(ctx, "locationName", _locationName);
         return calculateClassEarnings(person, classType as ClassType, locationName as LocationName);
       },
-      factionGains: (ctx) => (_player, _workType, _favor) => {
-        const player = helpers.player(ctx, _player);
+      factionGains: (ctx) => (_person, _workType, _favor) => {
+        const person = helpers.person(ctx, _person);
         const workType = helpers.string(ctx, "_workType", _workType) as FactionWorkType;
         const favor = helpers.number(ctx, "favor", _favor);
-        const exp = calculateFactionExp(player, workType);
-        const rep = calculateFactionRep(player, workType, favor);
+        const exp = calculateFactionExp(person, workType);
+        const rep = calculateFactionRep(person, workType, favor);
         exp.reputation = rep;
         return exp;
       },
