@@ -58,10 +58,6 @@ export abstract class Person {
     this.mults = defaultMultipliers();
   }
 
-  getIntelligenceBonus(weight: number): number {
-    return calculateIntelligenceBonus(this.skills.intelligence, weight);
-  }
-
   abstract takeDamage(amt: number): boolean;
   abstract whoAmI(): string;
   abstract toJSON(): IReviverValue;
